@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Note the location of the etcd data directory (or $ETCD_DATA_DIR in the 
+# Note the location of the etcd data directory (or $ETCD_DATA_DIR in the
 # following sections), which depends on how etcd is deployed.
 #
 # Deployment Type               | Data Directory
@@ -15,7 +15,9 @@ BACKUP_DIR_WITH_DATE=${BACKUP_DIR}_$(date +%Y%m%d%H%M)
 
 
 ### Setup
-mkdir -p $BACKUP_DIR_WITH_DATE
+if [ ! -d "$BACKUP_DIR_WITH_DATE" ]; then
+  mkdir -p $BACKUP_DIR_WITH_DATE
+fi
 
 
 ### Cluster Backup
@@ -62,4 +64,3 @@ do
     oc get pvc -o json --export=true -n ${project} > pvc.json 2>/dev/null
     echo "done."
 done
-
